@@ -1,0 +1,36 @@
+### IntelliJ IDEA ###
+### .gitignore permite que diretórios e arquivos
+### sejam ignorados ao realizar o VERSIONAMENTO
+### LOCAL E REMOTO!
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+.idea/
+src/view/resources/config.properties
+
+
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
