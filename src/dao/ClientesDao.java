@@ -19,9 +19,26 @@ public class ClientesDao {
             novoCliente.setString(4, "Uircardoso123@gmail.com");
 
             int linhaAfetada = novoCliente.executeUpdate();
+            conndb.close();
             return linhaAfetada > 0;
         }catch (Exception erro) {
             System.out.println("Erro ao inserir cliente: " + erro);
+            return false;
+        }
+    }
+    public boolean deletarClientes() {
+        try{
+            Connection conndb = conexao.conectar();
+            PreparedStatement removeClientes = conndb.prepareStatement("DELETE FROM clientes WHERE id = ?;");
+
+            removeClientes.setInt(1, 1);
+
+            int linhaAfetada = removeClientes.executeUpdate();
+            conndb.close();
+            return linhaAfetada > 0;
+        }
+        catch (Exception erro) {
+            System.out.println("Erro ao deletar clientes: " + erro);
             return false;
         }
     }

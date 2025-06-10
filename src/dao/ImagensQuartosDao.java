@@ -17,9 +17,26 @@ public class ImagensQuartosDao {
             novaImagemQuarto.setInt(2, 1);
 
             int linhaAfetada = novaImagemQuarto.executeUpdate();
+            conndb.close();
             return linhaAfetada > 0;
         } catch (Exception erro) {
             System.out.println("Erro ao inserir imagem: " + erro);
+            return false;
+        }
+    }
+    public boolean deletarImagensQuartos() {
+        try{
+            Connection conndb = conexao.conectar();
+            PreparedStatement removeImagensQuartos = conndb.prepareStatement("DELETE FROM imagens_quartos WHERE id = ?;");
+
+            removeImagensQuartos.setInt(1, 1);
+
+            int linhaAfetada = removeImagensQuartos.executeUpdate();
+            conndb.close();
+            return linhaAfetada > 0;
+        }
+        catch (Exception erro) {
+            System.out.println("Erro ao deletar imagens_quartos: " + erro);
             return false;
         }
     }

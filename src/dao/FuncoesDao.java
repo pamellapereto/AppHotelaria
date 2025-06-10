@@ -16,9 +16,26 @@ public class FuncoesDao {
             novaFuncao.setString(1, "Porteiro");
 
             int linhaAfetada = novaFuncao.executeUpdate();
+            conndb.close();
             return linhaAfetada > 0;
         }catch (Exception erro) {
             System.out.println("Erro ao inserir função: " + erro);
+            return false;
+        }
+    }
+    public boolean deletarFuncoes() {
+        try{
+            Connection conndb = conexao.conectar();
+            PreparedStatement removeFuncoes = conndb.prepareStatement("DELETE FROM funcoes WHERE id = ?;");
+
+            removeFuncoes.setInt(1, 1);
+
+            int linhaAfetada = removeFuncoes.executeUpdate();
+            conndb.close();
+            return linhaAfetada > 0;
+        }
+        catch (Exception erro) {
+            System.out.println("Erro ao deletar funcoes: " + erro);
             return false;
         }
     }

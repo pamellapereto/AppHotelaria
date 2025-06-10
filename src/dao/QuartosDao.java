@@ -22,9 +22,26 @@ public class QuartosDao {
             novoQuarto.setBoolean(6, true);
 
             int linhaAfetada = novoQuarto.executeUpdate();
+            conndb.close();
             return linhaAfetada > 0;
         }catch (Exception erro) {
             System.out.println("Erro ao inserir quarto: " + erro);
+            return false;
+        }
+    }
+    public boolean deletarQuartos() {
+        try{
+            Connection conndb = conexao.conectar();
+            PreparedStatement removeQuarto = conndb.prepareStatement("DELETE FROM quartos WHERE id = ?;");
+
+            removeQuarto.setInt(1, 1);
+
+            int linhaAfetada = removeQuarto.executeUpdate();
+            conndb.close();
+            return linhaAfetada > 0;
+        }
+        catch (Exception erro) {
+            System.out.println("Erro ao deletar quarto: " + erro);
             return false;
         }
     }

@@ -19,9 +19,26 @@ public class UsuariosDao {
             novoUsuario.setInt(4, 1);
 
             int linhaAfetada = novoUsuario.executeUpdate();
+            conndb.close();
             return linhaAfetada > 0;
         } catch (Exception erro) {
             System.out.println("Erro ao inserir usuario: " + erro);
+            return false;
+        }
+    }
+    public boolean deletarUsuario() {
+        try{
+            Connection conndb = conexao.conectar();
+            PreparedStatement removeUsuario = conndb.prepareStatement("DELETE FROM usuarios WHERE id = ?;");
+
+            removeUsuario.setInt(1, 1);
+
+            int linhaAfetada = removeUsuario.executeUpdate();
+            conndb.close();
+            return linhaAfetada > 0;
+        }
+        catch (Exception erro) {
+            System.out.println("Erro ao deletar usuario: " + erro);
             return false;
         }
     }

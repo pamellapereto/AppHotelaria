@@ -17,9 +17,26 @@ public class ImagensDao {
             novaImagem.setString(2, "C:users/fotos/foto1.jpg");
 
             int linhaAfetada = novaImagem.executeUpdate();
+            conndb.close();
             return linhaAfetada > 0;
         } catch (Exception erro) {
             System.out.println("Erro ao inserir imagem: " + erro);
+            return false;
+        }
+    }
+    public boolean deletarImagens() {
+        try{
+            Connection conndb = conexao.conectar();
+            PreparedStatement removeImagens = conndb.prepareStatement("DELETE FROM imagens WHERE id = ?;");
+
+            removeImagens.setInt(1, 1);
+
+            int linhaAfetada = removeImagens.executeUpdate();
+            conndb.close();
+            return linhaAfetada > 0;
+        }
+        catch (Exception erro) {
+            System.out.println("Erro ao deletar imagens: " + erro);
             return false;
         }
     }
