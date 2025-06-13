@@ -1,8 +1,6 @@
 package util;
 
 import dao.*;
-import model.Clientes;
-import model.Usuarios;
 
 import java.sql.Connection;
 
@@ -14,10 +12,9 @@ public class TesteConexao {
             System.out.println("Conexão estabelcida com sucesso!");
             try {
 
-                UsuariosDao usuariosDao = new UsuariosDao();
-                usuariosDao.deletarUsuario();
+                AdicionaisDao adicionaisDao = new AdicionaisDao();
+                adicionaisDao.pesquisarAdicionais();
 
-                System.out.println("Usuario removido com sucesso!");
                 condb.close();
                 System.out.println("Conexão encerrada!");
 
