@@ -52,11 +52,11 @@ public class Login extends Application {
         lblTitulo.setAlignment(Pos.CENTER);
         lblTitulo.setStyle(styleSemiBold);
 
-        Label lblUsuario = new Label("Usuário:");
+        Label lblUsuario = new Label("E-mail:");
         lblUsuario.setStyle(styleRegular);
 
         TextField txtUsuario = new TextField();
-        txtUsuario.setPromptText("Digite seu usuário");
+        txtUsuario.setPromptText("Digite seu e-mail");
 
         Label lblSenha = new Label("Senha:");
         lblSenha.setStyle(styleRegular);

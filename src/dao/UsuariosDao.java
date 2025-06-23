@@ -1,5 +1,6 @@
 package dao;
 
+import model.Usuarios;
 import util.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,11 +13,11 @@ public class UsuariosDao {
         try {
             Connection conndb = conexao.conectar();
             PreparedStatement novoUsuario = conndb.prepareStatement("INSERT INTO usuarios " +
-                    "(nome, senha, email, fk_funcoes) VALUES (?, md5(?), ?, ?);");
+                    "(nome, senha, email, fk_cargos) VALUES (?, md5(?), ?, ?);");
 
-            novoUsuario.setString(1, "João");
+            novoUsuario.setString(1, "Pamella Christini Pereto e Silva");
             novoUsuario.setString(2, "123");
-            novoUsuario.setString(3,"joasouza123@gmail.com" );
+            novoUsuario.setString(3,"pamellapereto@gmail.com" );
             novoUsuario.setInt(4, 1);
 
             int linhaAfetada = novoUsuario.executeUpdate();
@@ -65,17 +66,19 @@ public class UsuariosDao {
         return false;
     }
 
-    public void pesquisarUsuario() {
-        try {
-            Connection conndb = conexao.conectar();
-            PreparedStatement pesquisarUsuario = conndb.prepareStatement("SELECT nome, email FROM usuarios WHERE fk_funcoes = ?;");
-            pesquisarUsuario.setInt(1, 1);
-            ResultSet resultado = pesquisarUsuario.executeQuery();
+    public void autenticarUsuario(Usuarios usuario) {
+                try {
+                    Connection conndb = conexao.conectar();
+                    PreparedStatement autenticarUsuario = conndb.prepareStatement
+                    ("SELECT nome FROM usuarios WHERE email = ? AND senha = md5(?);");
+            autenticarUsuario.setString(1, usuario.getEmail());
+            autenticarUsuario.setString(2, usuario.getSenha());
+
+            ResultSet resultado = autenticarUsuario.executeQuery();
 
             while (resultado.next()) {
                 String nome = resultado.getString("nome");
-                String email = resultado.getString("email");
-                System.out.println("Nome: "+ nome + "\nEmail: "+ email);
+                System.out.println("Nome: "+ nome);
             }
             conndb.close();
         }

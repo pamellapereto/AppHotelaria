@@ -1,19 +1,28 @@
 package util;
 
 import dao.*;
+import model.Usuarios;
 
 import java.sql.Connection;
 
 public class TesteConexao {
     public static void main(String[] args) {
         Conexao conexao = new Conexao();
+        //Novo objeto criado (nova instância da classe model.Usuarios)
+        Usuarios usuario = new Usuarios("Pamella Christini Pereto e Silva", "pamellapereto@gmail.com", "123", 1);
+
         Connection condb = conexao.conectar();
         if (condb != null) {
             System.out.println("Conexão estabelcida com sucesso!");
             try {
 
-                AdicionaisDao adicionaisDao = new AdicionaisDao();
-                adicionaisDao.pesquisarAdicionais();
+                //Testando a inserção e a autenticação de um usuário
+                UsuariosDao usuariosDao = new UsuariosDao();
+
+                //usuariosDao.inserirUsuario();
+                usuariosDao.autenticarUsuario(usuario); //Objeto passado como parâmetro para autenticação
+
+
 
                 condb.close();
                 System.out.println("Conexão encerrada!");
