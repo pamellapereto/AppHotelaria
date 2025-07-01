@@ -65,25 +65,21 @@ public class UsuariosDao {
         }
         return false;
     }
-
-    public void autenticarUsuario(Usuarios usuario) {
-                try {
-                    Connection conndb = conexao.conectar();
-                    PreparedStatement autenticarUsuario = conndb.prepareStatement
+    public boolean autenticarUsuario(Usuarios usuario) {
+                try { Connection conndb = conexao.conectar();
+                    PreparedStatement stmt = conndb.prepareStatement
                     ("SELECT nome FROM usuarios WHERE email = ? AND senha = md5(?);");
-            autenticarUsuario.setString(1, usuario.getEmail());
-            autenticarUsuario.setString(2, usuario.getSenha());
-
-            ResultSet resultado = autenticarUsuario.executeQuery();
-
-            while (resultado.next()) {
+            stmt.setString(1, usuario.getEmail());
+            stmt.setString(2, usuario.getSenha());
+            ResultSet resultado = stmt.executeQuery();
+            boolean acessoAutorizado = resultado.next();
                 String nome = resultado.getString("nome");
-                System.out.println("Nome: "+ nome);
-            }
+                System.out.println("Olá, seja bem-vindo, " + nome);
             conndb.close();
-        }
-        catch (Exception erro) {
+            return acessoAutorizado;
+        } catch (Exception erro) {
             System.out.println("Erro ao pesquisar usuario: " + erro);
+            return false;
         }
     }
 }
