@@ -1,5 +1,6 @@
 package view;
 
+import controller.UsuariosController;
 import javafx.application.Application;
 
 import javafx.geometry.HPos;
@@ -101,23 +102,28 @@ public class Login extends Application {
         Button botaoLogin = new Button("Login");
         botaoLogin.setFont(Font.font(fontRegular.getFamily(), 12));
         botaoLogin.setStyle("""
-
             -fx-background-color: #4b0505;
-
             -fx-text-fill: white;
-
             -fx-font-size: 14px;
-
             -fx-font-weight: bold;
-
             -fx-background-radius: 20px;
-
             -fx-padding: 5px 70px;
-
             -fx-cursor: hand;
-
         """);
-
+        /* Usuário clica no botão Login para se autenticar com os valores dos campos
+        txtUsuario e txtSenha (senha visível) || campoSenha (senha oculta) */
+        botaoLogin.setOnAction(evento -> {
+           String usuario = txtUsuario.getText();
+           String senha = campoSenha.isVisible() ? campoSenha.getText() : txtSenha.getText();
+           UsuariosController usuariosController = new UsuariosController();
+           boolean loginSucesso = usuariosController.verificarCredenciais(usuario, senha);
+           if (loginSucesso) {
+               System.out.println("Login efetuado com sucesso!");
+               //Código para abrir a próxima janela
+           } else {
+               System.out.println("Login inválido!");
+           }
+        });
 
 
         GridPane gridForm = new GridPane();

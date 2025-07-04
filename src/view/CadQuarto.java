@@ -1,5 +1,7 @@
 package view;
 
+import controller.QuartosController;
+import controller.UsuariosController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.Quartos;
 import view.components.Buttons;
 import view.components.Sidebar;
 
@@ -73,17 +76,17 @@ public class CadQuarto extends Application {
 
         Label lblCamaCasal = new Label("Quantidade Cama Casal: ");
         lblCamaCasal.setStyle(styleRegular);
-        Spinner<Integer> qtdCamaCsal = new Spinner<>(0, 2, 0);
-        qtdCamaCsal.setMinWidth(200);
+        Spinner<Integer> qtdCamaCasal = new Spinner<>(0, 2, 0);
+        qtdCamaCasal.setMinWidth(200);
 
         Label lblCamaSolteiro = new Label("Quantidade Cama Solteiro: ");
         lblCamaSolteiro.setStyle(styleRegular);
         Spinner<Integer> qtdCamaSolteiro = new Spinner<>(0, 2, 0);
         qtdCamaSolteiro.setMinWidth(200);
 
-        ComboBox emailOpt = new ComboBox();
-        emailOpt.getItems().addAll("Disponivel", "Indisponivel");
-        emailOpt.setMinWidth(120);
+        ComboBox disponivelOpt = new ComboBox();
+        disponivelOpt.getItems().addAll("Disponivel", "Indisponivel");
+        disponivelOpt.setMinWidth(120);
 
         GridPane fromGrid = new GridPane();
         fromGrid.setAlignment(Pos.CENTER);
@@ -94,11 +97,38 @@ public class CadQuarto extends Application {
         fromGrid.add(lblPreco, 0, 2);
         fromGrid.add(txtPreco, 1, 2);
         fromGrid.add(lblCamaCasal, 0, 3);
-        fromGrid.add(qtdCamaCsal, 1, 3);
+        fromGrid.add(qtdCamaCasal, 1, 3);
         fromGrid.add(lblCamaSolteiro, 0, 4);
         fromGrid.add(qtdCamaSolteiro, 1, 4);
+        fromGrid.add(disponivelOpt, 0, 5);
         fromGrid.setHgap(10);
         fromGrid.setVgap(10);
+
+        buttons.btnCadastrar.setOnAction(evento -> {
+            String nome = txtNome.getText();  //TextField do nome do quarto
+            String numero = txtNumero.getText(); //TextField do número do quarto
+            double preco = Double.parseDouble(txtPreco.getText()); //TextField do preço do quarto
+            int camaSolteiro = qtdCamaSolteiro.getValue(); //Spinner da qtd cama de solteiro do quarto
+            int camaCasal = qtdCamaCasal.getValue(); //Spinner da qtd cama de casal do quarto
+
+            //ComboBox da disponibilidade do quarto
+            String disponivel = (String) disponivelOpt.getSelectionModel().getSelectedItem();
+            boolean isDisponivel;
+            if (disponivel.equals("Disponivel")) {
+                isDisponivel = true;
+            } else {
+                isDisponivel = false;
+            }
+            QuartosController quartosController = new QuartosController();
+
+            boolean sucessoInsercao = quartosController.verificarInfosQuartos(nome,numero,camaCasal,camaSolteiro,
+                    preco, isDisponivel);
+            if (sucessoInsercao) {
+                System.out.println("Quarto cadastrado com sucesso!");
+            } else {
+                System.out.println("Não foi possivel cadastrar o quarto!");
+            }
+        });
 
         VBox layout = new VBox(tituloBox, fromGrid, buttons);
         layout.setAlignment(Pos.CENTER);
